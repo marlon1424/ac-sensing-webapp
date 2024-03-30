@@ -1,0 +1,31 @@
+{
+  "name": "ac-sensing-webapp",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marlon1424/ac-sensing-webapp.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/marlon1424/ac-sensing-webapp/issues"
+  },
+  "homepage": "https://github.com/marlon1424/ac-sensing-webapp#readme",
+  "dependencies": {
+    "firebase": "^10.10.0",
+    "firebase-admin": "^12.0.0"
+  },
+  "devDependencies": {
+    "css-loader": "^6.10.0",
+    "style-loader": "^3.3.4",
+    "webpack": "^5.91.0",
+    "webpack-cli": "^5.1.4"
+  }
+}
