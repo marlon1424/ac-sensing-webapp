@@ -9,25 +9,6 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 
-async function getRfidData(){
-    return new Promise((resolve, reject) => {
-        try{
-            const database = getDatabase(app);
-            const reference = ref(database, 'RFID');
-            onValue(reference, (snapshot) => {
-                const tagData = snapshot.val();
-                const sensorCode = tagData["Sensor Code"];
-                const tagRSSI = tagData[" Tag RSSI"];
-                console.log(`Sensor Code: ${sensorCode}`);
-                console.log(`RSSI: ${tagRSSI}`);
-                resolve({sensorCode, tagRSSI});
-            });
-        } catch (error){
-            reject(error);
-        }
-    });
-}
-
 async function displayRFIDTagData(main){
     const sensorCodeDiv = document.createElement('div');
     const tagRSSIDiv = document.createElement('div');
@@ -54,10 +35,17 @@ async function displayRFIDTagData(main){
     tagRSSIDiv.appendChild(tagRSSIResultsDiv);
 
     try{
-        const {sensorCode, tagRSSI} = await getRfidData();
-
-        sensorCodeResultsDiv.innerText = `${sensorCode}`;
-        tagRSSIResultsDiv.innerText = `${tagRSSI}`;
+        const database = await getDatabase(app);
+            const reference = ref(database, 'RFID');
+            onValue(reference, (snapshot) => {
+                const tagData = snapshot.val();
+                const sensorCode = tagData["Sensor Code"];
+                const tagRSSI = tagData[" Tag RSSI"];
+                console.log(`Sensor Code: ${sensorCode}`);
+                console.log(`RSSI: ${tagRSSI}`);
+                sensorCodeResultsDiv.innerText = `${sensorCode}`;
+                tagRSSIResultsDiv.innerText = `${tagRSSI} dBm`;
+            });
 
         main.appendChild(sensorCodeDiv);
         main.appendChild(tagRSSIDiv);
@@ -87,7 +75,5 @@ function displayWebPage(){
     document.body.appendChild(headings);
     document.body.appendChild(main);
 }
-
-
 
 displayWebPage();
